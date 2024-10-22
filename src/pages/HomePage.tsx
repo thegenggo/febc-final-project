@@ -6,13 +6,12 @@ import Button from "@mui/material/Button";
 import CourseCard from "../components/CourseCard";
 import Container from "@mui/material/Container";
 import { Icon } from '@iconify/react';
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import { Link } from "react-router-dom";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 
 function HomePage() {
   const [courses, setCourses] = useState<Course[]>([])
+  const [categories, setCategories] = useState<string[]>([])
+  const [categoryFilter, setCategoryFilter] = useState<string>('All')
   const coursesWrapper = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -20,6 +19,15 @@ function HomePage() {
       .then(response => {
         setCourses(response.data);
         console.log(courses);
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      })
+
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/categories`)
+      .then(response => {
+        setCategories(response.data);
+        console.log(categories);
       })
       .catch(error => {
         console.error('There was an error!', error);
@@ -34,9 +42,39 @@ function HomePage() {
     element.scrollLeft += 100;
   }
 
+  const handleCategoryChange = (event: SelectChangeEvent) => {
+    setCategoryFilter(event.target.value);
+  }
+
   return (
     <>
-      <Container maxWidth="lg" sx={{ marginY: 'auto' }}>
+      <Container maxWidth="lg" 
+        sx={{
+          display: 'block',
+          padding: '0px !important'
+        }}
+      >
+        <Box display='flex'
+          margin='0px 20px'
+          justifyContent='space-between'
+        >
+          <Typography variant='h3'>
+            หลักสูตรทั้งหมด
+          </Typography>
+          <FormControl sx={{ m: 1, width: 200 }}>
+            <InputLabel>Category</InputLabel>
+            <Select
+              value={categoryFilter}
+              label="Category"
+              onChange={handleCategoryChange}
+            >
+              <MenuItem value='All'>All</MenuItem>
+              {categories.map((category) => (
+                <MenuItem key={category} value={category}>{category}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
         <Box
           sx={{
             position: 'relative',
@@ -84,8 +122,13 @@ function HomePage() {
               padding: '27px 8px 42px',
               scrollbarWidth: 'none',
             }}>
-            {courses.map((course) => (
-              <CourseCard course={course}/>
+            {courses
+              .filter((course) => {
+                if (categoryFilter === 'All') return true;
+                return course.category === categoryFilter 
+              })
+              .map((course) => (
+              <CourseCard key={course.id} course={course}/>
             ))}
           </Box>
         </Box>

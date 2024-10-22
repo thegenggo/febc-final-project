@@ -6,10 +6,10 @@ function Layout() {
   return (
     <>
       <AppBar position="static"
+        elevation={0}
         sx={{
           height: '64px',
           width: '100%',
-          backgroundColor: 'rgb(33, 43, 54)',
           zIndex: 10,
         }}
       >
@@ -55,7 +55,12 @@ function Layout() {
           </Box>
         </Container>
       </AppBar>
-      <Box component='main'>
+      <Box component='main'
+        sx={{
+          flexGrow: 1,
+          paddingTop: '88px',
+        }}
+      >
         <Outlet />
       </Box>
     </>

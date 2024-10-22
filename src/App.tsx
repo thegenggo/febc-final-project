@@ -6,7 +6,14 @@ import createTheme from '@mui/material/styles/createTheme';
 import { ThemeProvider } from '@mui/material';
 import Layout from './layouts/Layout';
 
-const theme = createTheme({
+let theme = createTheme({
+  palette: {
+    mode: 'dark',
+    background: {
+      default: '#212b36',
+      paper: '#212b36',
+    }
+  },
   typography: {
     fontFamily: 'prompt',
     subtitle2: {
@@ -29,6 +36,21 @@ const theme = createTheme({
     }
   }
 });
+
+theme.typography.h3 = {
+  fontSize: '1.5rem',
+  fontWeight: 600,
+  lineHeight: 1.5,
+  [theme.breakpoints.up('sm')]: {
+    fontSize: '1.625rem',
+  },
+  [theme.breakpoints.up('md')]: {
+    fontSize: '1.875rem',
+  },
+  [theme.breakpoints.up('lg')]: {
+    fontSize: '2rem',
+  },
+}
 
 function App() {
   return (
