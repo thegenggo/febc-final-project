@@ -26,7 +26,7 @@ function CourseCard({ course }: {course : Course}) {
         }}>
           <Box
             component={RouterLink}
-            to={`/${course.id}`}
+            to={`courses/${course.id}`}
             sx={{
               textDecoration: 'none'
             }}

@@ -14,7 +14,7 @@ function HomePage() {
   const [categoryFilter, setCategoryFilter] = useState<string>('All')
   const coursesWrapper = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
+  const fetchAllCourses = () => {
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/courses`)
       .then(response => {
         setCourses(response.data);
@@ -23,7 +23,20 @@ function HomePage() {
       .catch(error => {
         console.error('There was an error!', error);
       })
+  }
 
+  const fetchCoursesByCategory = (category: string) => {
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/categories/${category}/courses`)
+      .then(response => {
+        setCourses(response.data);
+        console.log(courses);
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      })
+  }
+
+  const fetchAllCategories = () => {
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/categories`)
       .then(response => {
         setCategories(response.data);
@@ -32,7 +45,16 @@ function HomePage() {
       .catch(error => {
         console.error('There was an error!', error);
       })
+  }
+
+  useEffect(() => {
+    fetchAllCategories();
   }, []);
+
+  useEffect(() => {
+    if(categoryFilter === 'All') fetchAllCourses();
+    else fetchCoursesByCategory(categoryFilter);
+  }, [categoryFilter])
 
   const scrollLeft = (element: HTMLDivElement) => {
     element.scrollLeft -= 100;
@@ -123,10 +145,6 @@ function HomePage() {
               scrollbarWidth: 'none',
             }}>
             {courses
-              .filter((course) => {
-                if (categoryFilter === 'All') return true;
-                return course.category === categoryFilter 
-              })
               .map((course) => (
               <CourseCard key={course.id} course={course}/>
             ))}
