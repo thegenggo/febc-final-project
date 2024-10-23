@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { Course } from "../models/course";
 import axios from "axios";
-import { Box, Checkbox, Chip, colors, Divider, ListItemButton, Stack, Typography } from "@mui/material";
+import { Box, Button, Checkbox, Chip, colors, Divider, ListItemButton, Stack, Typography } from "@mui/material";
 import Grid from '@mui/material/Grid2'
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { lectures } from "../mock-data";
@@ -93,7 +93,7 @@ function CoursePage() {
           }}
         >
           <Box padding='60px'>
-            <Grid container>
+            <Grid container justifyContent='space-between'>
               <Grid size={{ xs: 12, md: 6.78 }}>
                 <Box>
                   <Typography variant='h4' margin='0px 0px 20px'>เกี่ยวกับ</Typography>
@@ -142,7 +142,59 @@ function CoursePage() {
                   </>
                 )) : null}
               </Grid>
-              <Grid size={{ xs: 12, md: 4.57 }}></Grid>
+              <Grid size={{ xs: 12, md: 4.57 }}>
+                <Typography variant='h3' textAlign='center'>
+                  ยินดีต้อนรับสมาชิก
+                </Typography>
+                <Typography variant='h3' textAlign='center' color='rgb(255, 192, 0)'>
+                  borntoDev
+                </Typography>
+                <Button variant='contained' fullWidth
+                  sx={{
+                    margin: '25px 0px 0px',
+                    padding: '10px',
+                  }}
+                >
+                  <Typography variant='body1' fontSize='1rem' fontWeight={700} lineHeight={1.5}>
+                    เข้าเรียนต่อ
+                  </Typography>
+                </Button>
+                <Box>
+                  <Box display='flex' marginTop='15px' alignItems='center' gap='20px'>
+                    <Box padding='11px' border='1px solid rgb(145, 158, 171)' borderRadius='100px'>
+                      <Box component='span' lineHeight={0} display='block' overflow='hidden' width='30px' height='30px'>
+                        <Icon icon="fa6-solid:clock" width='100%' height='100%' color={colors.amber[500]}/>
+                      </Box>
+                    </Box>
+                    <Box>{course ? Math.round(lectures[course?.id].reduce((accumulator, current) => accumulator + current.time, 0)/60) + " ชั่วโมง" : null}</Box>
+                  </Box>
+                  <Box display='flex' marginTop='15px' alignItems='center' gap='20px'>
+                    <Box padding='11px' border='1px solid rgb(145, 158, 171)' borderRadius='100px'>
+                      <Box component='span' lineHeight={0} display='block' overflow='hidden' width='30px' height='30px'>
+                      <Icon icon="basil:document-outline" width='100%' height='100%' color={colors.amber[500]}/>
+                      </Box>
+                    </Box>
+                    <Box>{course ? "จำนวน " + lectures[course?.id].length + " บทเรียน" : null}</Box>
+                  </Box>
+                  <Box display='flex' marginTop='15px' alignItems='center' gap='20px'>
+                    <Box padding='11px' border='1px solid rgb(145, 158, 171)' borderRadius='100px'>
+                      <Box component='span' lineHeight={0} display='block' overflow='hidden' width='30px' height='30px'>
+                        <Icon icon="mage:chart-up-fill" width='100%' height='100%' color={colors.amber[500]}/>
+                      </Box>
+                    </Box>
+                    <Box>ไม่ต้องมีพื้นฐาน</Box>
+                  </Box>
+                  <Box display='flex' marginTop='15px' alignItems='center' gap='20px'>
+                    <Box padding='11px' border='1px solid rgb(145, 158, 171)' borderRadius='100px'>
+                      <Box component='span' lineHeight={0} display='block' overflow='hidden' width='30px' height='30px'>
+                        <Icon icon="tabler:world" width='100%' height='100%' color={colors.amber[500]}/>
+                      </Box>
+                    </Box>
+                    <Box>เรียนออนไลน์ 100 %</Box>
+                  </Box>
+                </Box>
+                
+              </Grid>
             </Grid>
           </Box>
         </Box>

@@ -3,12 +3,15 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import CoursePage from './pages/CoursePage'
 import createTheme from '@mui/material/styles/createTheme';
-import { ThemeProvider } from '@mui/material';
+import { colors, ThemeProvider } from '@mui/material';
 import Layout from './layouts/Layout';
 
 let theme = createTheme({
   palette: {
     mode: 'dark',
+    primary: {
+      main: colors.amber[500]
+    },
     background: {
       default: '#212b36',
       paper: '#212b36',
