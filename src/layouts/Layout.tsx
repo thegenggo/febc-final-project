@@ -5,10 +5,10 @@ import { Link, Outlet } from "react-router-dom";
 function Layout() {
   return (
     <>
-      <AppBar position="static"
+      <AppBar position="fixed"
         elevation={0}
         sx={{
-          height: '64px',
+          height: '88px',
           width: '100%',
           zIndex: 10,
         }}
@@ -37,7 +37,7 @@ function Layout() {
                   lineHeight: 0,
                   display: 'block',
                   overflow: 'hidden',
-                  width: 120,
+                  width: '175px',
                 }}
               >
                 <Box component='img'

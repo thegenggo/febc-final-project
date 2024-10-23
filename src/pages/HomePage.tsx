@@ -70,14 +70,14 @@ function HomePage() {
 
   return (
     <>
-      <Container maxWidth="lg" 
+      <Container maxWidth="lg"
         sx={{
           display: 'block',
-          padding: '0px !important'
+          padding: '0px !important',
         }}
       >
         <Box display='flex'
-          margin='0px 20px'
+          margin='50px 20px 0px'
           justifyContent='space-between'
         >
           <Typography variant='h3'>

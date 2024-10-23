@@ -52,6 +52,32 @@ theme.typography.h3 = {
   },
 }
 
+theme.typography.h4 = {
+  fontWeight: 600,
+  lineHeight: 1.5,
+  fontSize: '1.25rem',
+  [theme.breakpoints.up('sm')]: {
+    fontSize: '1.25rem',
+  },
+  [theme.breakpoints.up('md')]: {
+    fontSize: '1.5rem',
+  },
+  [theme.breakpoints.up('lg')]: {
+    fontSize: '1.5rem',
+  },
+}
+
+theme.typography.body1 = {
+  fontWeight: 300,
+}
+
+theme.typography.body2 = {
+  lineHeight: 1.57143,
+  fontSize: '0.875rem',
+  fontWeight: 300,
+  color: 'rgb(145, 158, 171)',
+}
+
 function App() {
   return (
     <ThemeProvider theme={theme}>

@@ -81,15 +81,15 @@ function CourseCard({ course }: {course : Course}) {
                   >
                     {course.name}
                   </Typography>
-                  <Typography variant="caption" gutterBottom 
+                  <Typography variant="caption"
                     sx={{ 
                       color: 'rgb(145, 158, 171)',
-                      display: 'block',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
-                      height: 36,
+                      height: '36px',
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: 'vertical',
+                      display: '-webkit-box'
                     }}
                   >
                     {course.description}
