@@ -5,6 +5,7 @@ import CoursePage from './pages/CoursePage'
 import createTheme from '@mui/material/styles/createTheme';
 import { colors, ThemeProvider } from '@mui/material';
 import Layout from './layouts/Layout';
+import LecturePage from './pages/LecturePage';
 
 let theme = createTheme({
   palette: {
@@ -81,6 +82,13 @@ theme.typography.body2 = {
   color: 'rgb(145, 158, 171)',
 }
 
+theme.typography.subtitle2 = {
+  lineHeight: 1.57143,
+  fontSize: '0.875rem',
+  fontFamily: 'prompt',
+  fontWeight: 600
+}
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -88,7 +96,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Layout/>}>
             <Route index element={<HomePage />}></Route>
-            <Route path="courses/:id" element={<CoursePage />}></Route>
+            <Route path="courses/:courseId" element={<CoursePage />}></Route>
+            <Route path="courses/:courseId/:lectureName" element={<LecturePage />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

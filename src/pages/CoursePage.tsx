@@ -6,21 +6,23 @@ import { Box, Button, Checkbox, Chip, colors, Divider, ListItemButton, Stack, Ty
 import Grid from '@mui/material/Grid2'
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { lectures } from "../mock-data";
+import { Link as RouterLink } from 'react-router-dom';
 
 function CoursePage() {
-  const { id } = useParams<string>();
+  const { courseId } = useParams();
   const [course, setCourse] = useState<Course>();
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/courses/${id}`)
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/courses/${courseId}`)
       .then(response => {
-        setCourse(response.data)
-        console.log(course);
+        const data: Course = response.data;
+        data.lectures = lectures[data.id];
+        setCourse(response.data);
       })
       .catch(error => {
         console.error('There was an error!', error);
       })
-  }, [])
+  }, [courseId])
 
   return (
     <Box maxWidth={1270} margin='auto'>
@@ -94,7 +96,7 @@ function CoursePage() {
         >
           <Box padding='60px'>
             <Grid container justifyContent='space-between'>
-              <Grid size={{ xs: 12, md: 6.78 }}>
+              <Grid key={1} size={{ xs: 12, md: 6.78 }}>
                 <Box>
                   <Typography variant='h4' margin='0px 0px 20px'>เกี่ยวกับ</Typography>
                   <Box fontSize={20}>
@@ -110,15 +112,15 @@ function CoursePage() {
                 <Box margin='30px 0px 20px'>
                   <Typography variant='h4'>เนื้อหาในคอร์ส</Typography>
                 </Box>
-                {course ? lectures[course?.id].map((lecture, index) => (
-                  <>
-                    <ListItemButton>
+                {course?.lectures?.map((lecture, index) => (
+                  <Box key={index}>
+                    <ListItemButton component={RouterLink} to={`${lecture.name}`}>
                       <Grid container marginTop='20px' width='100%'>
                         <Grid size={{ xs: 2, sm: 1.15, }}>
                           <Typography variant='body1' color='rgb(145, 158, 171)' fontSize='36px'>{(index+1).toString().padStart(2, '0')}</Typography>
                         </Grid>
                         <Grid size={{ xs: 8.5, sm: 9.35 }}>
-                          <Box>
+                          <Box paddingX={1}>
                             <Typography variant='h5'>{lecture.name}</Typography>
                             <Chip icon={<Icon icon="fa6-solid:clock" />}
                               sx={{
@@ -139,17 +141,17 @@ function CoursePage() {
                       </Grid>
                     </ListItemButton>
                     <Divider/>
-                  </>
-                )) : null}
+                  </Box>
+                ))}
               </Grid>
-              <Grid size={{ xs: 12, md: 4.57 }}>
+              <Grid key={2} size={{ xs: 12, md: 4.57 }}>
                 <Typography variant='h3' textAlign='center'>
                   ยินดีต้อนรับสมาชิก
                 </Typography>
                 <Typography variant='h3' textAlign='center' color='rgb(255, 192, 0)'>
                   borntoDev
                 </Typography>
-                <Button variant='contained' fullWidth
+                <Button component={RouterLink} variant='contained' fullWidth to={`${course?.lectures?.[0].name}`}
                   sx={{
                     margin: '25px 0px 0px',
                     padding: '10px',

@@ -3,6 +3,7 @@ export interface Course {
     name: string;
     description: string;
     category: string;
+    lectures?: Lecture[];
 }
 
 export interface Lecture {

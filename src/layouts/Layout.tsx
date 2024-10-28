@@ -4,13 +4,13 @@ import { Link, Outlet } from "react-router-dom";
 
 function Layout() {
   return (
-    <>
+    <Box id='rootBox' sx={{ display: 'flex' }}>
       <AppBar position="fixed"
         elevation={0}
         sx={{
           height: '88px',
           width: '100%',
-          zIndex: 10,
+          zIndex: (theme) => theme.zIndex.drawer + 1
         }}
       >
         <Container maxWidth="lg"
@@ -20,6 +20,7 @@ function Layout() {
           }}
         >
           <Box
+            id='header-menu'
             sx={{
               height: '100%',
               display: 'flex',
@@ -51,7 +52,6 @@ function Layout() {
                 />
               </Box>
             </Box>
-            <Box component={Icon} icon="dashicons:menu-alt3" sx={{ width: 24, height: 24, cursor: 'pointer'}} />
           </Box>
         </Container>
       </AppBar>
@@ -59,11 +59,12 @@ function Layout() {
         sx={{
           flexGrow: 1,
           paddingTop: '88px',
+          paddingBottom: '64px',
         }}
       >
         <Outlet />
       </Box>
-    </>
+    </Box>
   )
 }
 
