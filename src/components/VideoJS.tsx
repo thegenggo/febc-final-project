@@ -26,7 +26,7 @@ export const VideoJS = (props: VideoJsProps) => {
 
       const player = playerRef.current = videojs(videoElement, options, () => {
         videojs.log('player is ready');
-        onReady && onReady(player);
+        onReady(player);
       });
 
     // You could update an existing player in the `else` block here
@@ -37,7 +37,7 @@ export const VideoJS = (props: VideoJsProps) => {
       player.autoplay(options.autoplay);
       player.src(options.sources);
     }
-  }, [options, videoRef]);
+  }, [options, videoRef, onReady]);
 
   // Dispose the Video.js player when the functional component unmounts
   React.useEffect(() => {
