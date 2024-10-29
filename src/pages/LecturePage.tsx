@@ -57,7 +57,7 @@ function LecturePage() {
     responsive: true,
     fluid: true,
     sources: [{
-      src: '/2024-10-24 16-38-05.mp4',
+      src: '//vjs.zencdn.net/v/oceans.mp4',
       type: 'video/mp4'
     }]
   };
