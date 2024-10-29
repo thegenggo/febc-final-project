@@ -219,7 +219,7 @@ function LecturePage() {
   return (
   <>
     <Helmet>
-        <title>{course?.name} | borntoDev School</title>
+        <title>{course?.name + " | borntoDev School"}</title>
     </Helmet>
     {document.getElementById("header-menu") ? createPortal(
       menuButton
