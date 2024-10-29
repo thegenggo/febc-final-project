@@ -33,7 +33,7 @@ function CoursePage() {
   return (
     <>
       <Helmet>
-        <title>{course?.name}</title>
+        <title>{course?.name} | borntoDev School</title>
       </Helmet>
       <Box maxWidth={1270} margin='auto'>
         <Box display='flex'
