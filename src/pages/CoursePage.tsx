@@ -101,7 +101,7 @@ function CoursePage() {
         >
           <Box padding='60px'>
             <Grid container justifyContent='space-between'>
-              <Grid key={1} size={{ xs: 12, md: 6.78 }}>
+              <Grid key={1} size={{ xs: 12, md: 6.78 }} order={{ xs: 2, md: 1 }}>
                 <Box>
                   <Typography variant='h4' margin='0px 0px 20px'>เกี่ยวกับ</Typography>
                   <Box fontSize={20}>
@@ -149,7 +149,7 @@ function CoursePage() {
                   </Box>
                 ))}
               </Grid>
-              <Grid key={2} size={{ xs: 12, md: 4.57 }}>
+              <Grid key={2} size={{ xs: 12, md: 4.57 }} order={{ xs: 1, md: 2 }} marginBottom={3}>
                 <Typography variant='h3' textAlign='center'>
                   ยินดีต้อนรับสมาชิก
                 </Typography>
