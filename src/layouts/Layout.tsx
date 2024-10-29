@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 
 function Layout() {
   return (
-    <Box id='rootBox' sx={{ display: 'flex' }}>
+    <Box id='rootBox'>
       <AppBar position="fixed"
         elevation={0}
         sx={{

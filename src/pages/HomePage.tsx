@@ -57,11 +57,11 @@ function HomePage() {
   }, [categoryFilter])
 
   const scrollLeft = (element: HTMLDivElement) => {
-    element.scrollLeft -= 100;
+    element.scrollLeft -= 270;
   }
 
   const scrollRight = (element: HTMLDivElement) => {
-    element.scrollLeft += 100;
+    element.scrollLeft += 270;
   }
 
   const handleCategoryChange = (event: SelectChangeEvent) => {
