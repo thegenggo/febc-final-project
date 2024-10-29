@@ -6,6 +6,7 @@ import createTheme from '@mui/material/styles/createTheme';
 import { colors, ThemeProvider } from '@mui/material';
 import Layout from './layouts/Layout';
 import LecturePage from './pages/LecturePage';
+import { HelmetProvider } from 'react-helmet-async';
 
 const theme = createTheme({
   palette: {
@@ -91,17 +92,19 @@ theme.typography.subtitle2 = {
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Layout/>}>
-            <Route index element={<HomePage />}></Route>
-            <Route path="courses/:courseId" element={<CoursePage />}></Route>
-            <Route path="courses/:courseId/:lectureName" element={<LecturePage />}></Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Layout/>}>
+              <Route index element={<HomePage />}></Route>
+              <Route path="courses/:courseId" element={<CoursePage />}></Route>
+              <Route path="courses/:courseId/:lectureName" element={<LecturePage />}></Route>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </HelmetProvider>
   )
 }
 

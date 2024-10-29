@@ -11,6 +11,7 @@ import axios from "axios";
 import { Link as RouterLink } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { getLectureById, saveLectures, setIsViwed } from "../mock-data";
+import { Helmet } from "react-helmet-async";
 
 const drawerWidth = 380;
 
@@ -217,6 +218,9 @@ function LecturePage() {
 
   return (
   <>
+    <Helmet>
+        <title>{course?.name}</title>
+    </Helmet>
     {document.getElementById("header-menu") ? createPortal(
       menuButton
     , document.getElementById("header-menu")!) : null}

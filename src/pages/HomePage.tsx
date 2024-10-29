@@ -7,6 +7,7 @@ import CourseCard from "../components/CourseCard";
 import Container from "@mui/material/Container";
 import { Icon } from '@iconify/react';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
+import { Helmet } from "react-helmet-async";
 
 function HomePage() {
   const [courses, setCourses] = useState<Course[]>([])
@@ -67,6 +68,9 @@ function HomePage() {
 
   return (
     <>
+      <Helmet>
+        <title>borntoDev School | เริ่มต้นเรียน เขียนโปรแกรม ขั้นเทพ ! จากพื้นฐานสู่ยอดมนุษย์</title>
+      </Helmet>
       <Container maxWidth="lg"
         sx={{
           display: 'block',
