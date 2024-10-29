@@ -14,44 +14,41 @@ function HomePage() {
   const [categoryFilter, setCategoryFilter] = useState<string>('All')
   const coursesWrapper = useRef<HTMLDivElement>(null)
 
-  const fetchAllCourses = () => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/courses`)
-      .then(response => {
-        setCourses(response.data);
-        console.log(courses);
-      })
-      .catch(error => {
-        console.error('There was an error!', error);
-      })
-  }
-
-  const fetchCoursesByCategory = (category: string) => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/categories/${category}/courses`)
-      .then(response => {
-        setCourses(response.data);
-        console.log(courses);
-      })
-      .catch(error => {
-        console.error('There was an error!', error);
-      })
-  }
-
-  const fetchAllCategories = () => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/categories`)
-      .then(response => {
-        setCategories(response.data);
-        console.log(categories);
-      })
-      .catch(error => {
-        console.error('There was an error!', error);
-      })
-  }
-
   useEffect(() => {
+    const fetchAllCategories = () => {
+      axios.get(`${import.meta.env.VITE_BACKEND_URL}/categories`)
+        .then(response => {
+          setCategories(response.data);
+        })
+        .catch(error => {
+          console.error('There was an error!', error);
+        })
+    }
+
     fetchAllCategories();
   }, []);
 
   useEffect(() => {
+    const fetchAllCourses = () => {
+      axios.get(`${import.meta.env.VITE_BACKEND_URL}/courses`)
+        .then(response => {
+          setCourses(response.data);
+        })
+        .catch(error => {
+          console.error('There was an error!', error);
+        })
+    }
+  
+    const fetchCoursesByCategory = (category: string) => {
+      axios.get(`${import.meta.env.VITE_BACKEND_URL}/categories/${category}/courses`)
+        .then(response => {
+          setCourses(response.data);
+        })
+        .catch(error => {
+          console.error('There was an error!', error);
+        })
+    }
+
     if(categoryFilter === 'All') fetchAllCourses();
     else fetchCoursesByCategory(categoryFilter);
   }, [categoryFilter])

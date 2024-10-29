@@ -273,42 +273,48 @@ function LecturePage() {
     </>
     , document.getElementById("rootBox")!) : null}
     {congratulations}
-    <Container
+    <Box
       sx={{
-        marginTop: '30px'
+        paddingRight: { xs: '0px', lg: '380px' }
       }}
     >
-      <Paper elevation={1}
+      <Container
         sx={{
-          overflow: 'hidden'
+          marginTop: '30px',
         }}
       >
-        <Box>
-          <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
-        </Box>
-        <Box
+        <Paper elevation={1}
           sx={{
-            padding: '38px',
-            backgroundColor: 'rgb(33, 43, 54)',
+            overflow: 'hidden'
           }}
         >
-          <Box
-            display='flex'
-            justifyContent='space-between'
-          >
-            <Typography variant='h4'>
-              {lectureName}
-            </Typography>
-            <Button
-              variant='contained'
-              onClick={handleEndLesson}
-            >
-              จบบทเรียน
-            </Button>
+          <Box>
+            <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
           </Box>
-        </Box>
-      </Paper>
-    </Container>
+          <Box
+            sx={{
+              padding: '38px',
+              backgroundColor: 'rgb(33, 43, 54)',
+            }}
+          >
+            <Box
+              display='flex'
+              justifyContent='space-between'
+            >
+              <Typography variant='h4'>
+                {lectureName}
+              </Typography>
+              <Button
+                variant='contained'
+                onClick={handleEndLesson}
+              >
+                จบบทเรียน
+              </Button>
+            </Box>
+          </Box>
+        </Paper>
+      </Container>
+    </Box>
   </>
   )
 }

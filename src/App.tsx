@@ -7,7 +7,7 @@ import { colors, ThemeProvider } from '@mui/material';
 import Layout from './layouts/Layout';
 import LecturePage from './pages/LecturePage';
 
-let theme = createTheme({
+const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
