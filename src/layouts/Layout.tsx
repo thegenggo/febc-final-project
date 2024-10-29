@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react/dist/iconify.js";
 import { AppBar, Box, Container } from "@mui/material";
 import { Link, Outlet } from "react-router-dom";
 

@@ -1,16 +1,16 @@
-import { Box, Checkbox, Container, Drawer, IconButton, ListItemButton, ListItemIcon, Paper, Toolbar, Typography } from "@mui/material";
+import { Box, Button, Checkbox, Container, Drawer, IconButton, ListItemButton, ListItemIcon, Modal, Paper, Toolbar, Typography } from "@mui/material";
 import Player from "video.js/dist/types/player";
 import videojs from "video.js";
 import { useEffect, useRef, useState } from "react";
 import VideoJS from "../components/VideoJS";
 import { VideoJsOptions } from "../types/video-js";
 import { createPortal } from "react-dom";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Course } from "../models/course";
 import axios from "axios";
-import { lectures } from "../mock-data";
 import { Link as RouterLink } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { getLectureById, saveLectures, setIsViwed } from "../mock-data";
 
 const drawerWidth = 380;
 
@@ -20,6 +20,8 @@ function LecturePage() {
   const [course, setCourse] = useState<Course>();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [openCongrat, setOpenCongrat] = useState(false);
+  const navigate = useNavigate();
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -37,10 +39,11 @@ function LecturePage() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/courses/${courseId}`)
       .then(response => {
         const data: Course = response.data;
-        data.lectures = lectures[data.id];
+        data.lectures = getLectureById(data.id);
         setCourse(response.data);
       })
       .catch(error => {
@@ -71,6 +74,20 @@ function LecturePage() {
       videojs.log('player will dispose');
     });
   };
+
+  const handleEndLesson = () => {
+    if(!course || !course.lectures) return;
+    setIsViwed(+courseId!, lectureName!);
+    saveLectures();
+    const index = course.lectures.findIndex(i => i.name === lectureName);
+    const lecture = course.lectures[index+1]
+    if(!lecture) setOpenCongrat(true);
+    navigate(`../${lecture.name}`, { replace: true, relative: 'path' });
+  }
+
+  const handleCongratClose = () => {
+    navigate('..', { relative: 'path' });
+  }
 
   const drawer = (
     <>
@@ -164,6 +181,40 @@ function LecturePage() {
     </IconButton>
   )
 
+  const congratulations = (
+    <Modal
+        open={openCongrat}
+        aria-labelledby="congratulations-modal-title"
+        aria-describedby="congratulations-modal-description"
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            bgcolor: 'background.paper',
+            border: '2px solid #000',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
+            textAlign: 'center',
+          }}
+        >
+          <Typography id="congratulations-modal-title" variant="h5" component="h2" gutterBottom>
+            🎉 Congratulations! 🎉
+          </Typography>
+          <Typography id="congratulations-modal-description" sx={{ mb: 2 }}>
+            You have successfully completed this task!
+          </Typography>
+          <Button variant="contained" color="success" onClick={handleCongratClose}>
+            Close
+          </Button>
+        </Box>
+      </Modal>
+  )
+
   return (
   <>
     {document.getElementById("header-menu") ? createPortal(
@@ -219,8 +270,9 @@ function LecturePage() {
       >
         {drawer}
       </Drawer>
-    </>, document.getElementById("rootBox")!
-    ) : null}
+    </>
+    , document.getElementById("rootBox")!) : null}
+    {congratulations}
     <Container
       sx={{
         marginTop: '30px'
@@ -240,10 +292,19 @@ function LecturePage() {
             backgroundColor: 'rgb(33, 43, 54)',
           }}
         >
-          <Box>
+          <Box
+            display='flex'
+            justifyContent='space-between'
+          >
             <Typography variant='h4'>
               {lectureName}
             </Typography>
+            <Button
+              variant='contained'
+              onClick={handleEndLesson}
+            >
+              จบบทเรียน
+            </Button>
           </Box>
         </Box>
       </Paper>

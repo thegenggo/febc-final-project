@@ -5,7 +5,7 @@ import axios from "axios";
 import { Box, Button, Checkbox, Chip, colors, Divider, ListItemButton, Stack, Typography } from "@mui/material";
 import Grid from '@mui/material/Grid2'
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { lectures } from "../mock-data";
+import { getLectureById } from "../mock-data";
 import { Link as RouterLink } from 'react-router-dom';
 
 function CoursePage() {
@@ -16,13 +16,18 @@ function CoursePage() {
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/courses/${courseId}`)
       .then(response => {
         const data: Course = response.data;
-        data.lectures = lectures[data.id];
+        data.lectures = getLectureById(data.id);
         setCourse(response.data);
       })
       .catch(error => {
         console.error('There was an error!', error);
       })
   }, [courseId])
+
+  const findLatestCourse = () => {
+    const lecture = course?.lectures?.find(lecture => !lecture.isViewed);
+    return lecture ? lecture.name : course?.lectures?.[0].name;
+  }
 
   return (
     <Box maxWidth={1270} margin='auto'>
@@ -151,7 +156,7 @@ function CoursePage() {
                 <Typography variant='h3' textAlign='center' color='rgb(255, 192, 0)'>
                   borntoDev
                 </Typography>
-                <Button component={RouterLink} variant='contained' fullWidth to={`${course?.lectures?.[0].name}`}
+                <Button component={RouterLink} variant='contained' fullWidth to={`${findLatestCourse()}`}
                   sx={{
                     margin: '25px 0px 0px',
                     padding: '10px',
@@ -168,7 +173,7 @@ function CoursePage() {
                         <Icon icon="fa6-solid:clock" width='100%' height='100%' color={colors.amber[500]}/>
                       </Box>
                     </Box>
-                    <Box>{course ? Math.round(lectures[course?.id].reduce((accumulator, current) => accumulator + current.time, 0)/60) + " ชั่วโมง" : null}</Box>
+                    <Box>{course ? Math.round(getLectureById(course.id!).reduce((accumulator, current) => accumulator + current.time, 0)/60) + " ชั่วโมง" : null}</Box>
                   </Box>
                   <Box display='flex' marginTop='15px' alignItems='center' gap='20px'>
                     <Box padding='11px' border='1px solid rgb(145, 158, 171)' borderRadius='100px'>
@@ -176,7 +181,7 @@ function CoursePage() {
                       <Icon icon="basil:document-outline" width='100%' height='100%' color={colors.amber[500]}/>
                       </Box>
                     </Box>
-                    <Box>{course ? "จำนวน " + lectures[course?.id].length + " บทเรียน" : null}</Box>
+                    <Box>{course ? "จำนวน " + getLectureById(course.id!).length + " บทเรียน" : null}</Box>
                   </Box>
                   <Box display='flex' marginTop='15px' alignItems='center' gap='20px'>
                     <Box padding='11px' border='1px solid rgb(145, 158, 171)' borderRadius='100px'>
