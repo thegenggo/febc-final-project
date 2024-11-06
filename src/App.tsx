@@ -1,34 +1,110 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import HomePage from './pages/HomePage'
+import CoursePage from './pages/CoursePage'
+import createTheme from '@mui/material/styles/createTheme';
+import { colors, ThemeProvider } from '@mui/material';
+import Layout from './layouts/Layout';
+import LecturePage from './pages/LecturePage';
+import { HelmetProvider } from 'react-helmet-async';
+
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: colors.amber[500]
+    },
+    background: {
+      default: '#212b36',
+      paper: '#212b36',
+    }
+  },
+  typography: {
+    fontFamily: 'prompt',
+    subtitle2: {
+      fontWeight: 600,
+    },
+    caption: {
+      lineHeight: 1.5,
+      fontWeight: 300,
+    }
+  },
+  components: {
+    MuiSvgIcon: {
+      styleOverrides: {
+        fontSizeLarge: {
+          fontSize: '0.875rem',
+          fontFamily: 'prompt',
+          fontWeight: '600'
+        }
+      }
+    }
+  }
+});
+
+theme.typography.h3 = {
+  fontSize: '1.5rem',
+  fontWeight: 600,
+  lineHeight: 1.5,
+  [theme.breakpoints.up('sm')]: {
+    fontSize: '1.625rem',
+  },
+  [theme.breakpoints.up('md')]: {
+    fontSize: '1.875rem',
+  },
+  [theme.breakpoints.up('lg')]: {
+    fontSize: '2rem',
+  },
+}
+
+theme.typography.h4 = {
+  fontWeight: 600,
+  lineHeight: 1.5,
+  fontSize: '1.25rem',
+  [theme.breakpoints.up('sm')]: {
+    fontSize: '1.25rem',
+  },
+  [theme.breakpoints.up('md')]: {
+    fontSize: '1.5rem',
+  },
+  [theme.breakpoints.up('lg')]: {
+    fontSize: '1.5rem',
+  },
+}
+
+theme.typography.body1 = {
+  fontWeight: 300,
+}
+
+theme.typography.body2 = {
+  lineHeight: 1.57143,
+  fontSize: '0.875rem',
+  fontWeight: 300,
+  color: 'rgb(145, 158, 171)',
+}
+
+theme.typography.subtitle2 = {
+  lineHeight: 1.57143,
+  fontSize: '0.875rem',
+  fontFamily: 'prompt',
+  fontWeight: 600
+}
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <HelmetProvider>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Layout/>}>
+              <Route index element={<HomePage />}></Route>
+              <Route path="courses/:courseId" element={<CoursePage />}></Route>
+              <Route path="courses/:courseId/:lectureName" element={<LecturePage />}></Route>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </HelmetProvider>
   )
 }
 
