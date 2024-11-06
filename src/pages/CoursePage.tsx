@@ -42,6 +42,7 @@ function CoursePage() {
             backgroundImage: 'linear-gradient(rgba(22, 28, 36, 0.97), rgba(22, 28, 36, 0.95)), url("https://storage.borntodev.com/academy/content/1600x900-ROG-McHeXOiInFYOBOKQf3Y_a6uk_3-P7i71cfoy0Z2MVNFWTLa-EtcQuLXvA.webp")',
             backgroundSize: 'cover',
             backgroundPosition: 'center center',
+            flexDirection: { xs: 'column-reverse', md: 'row' }
           }}>
             <Box width='100%'
               display='flex'
